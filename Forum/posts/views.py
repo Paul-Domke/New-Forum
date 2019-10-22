@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
-from .models import Post, Report, Comment
+from .models import Post, Report, Comment, Tag
 from django.views.generic import (
 	ListView, 
 	DetailView, 
@@ -65,3 +65,8 @@ def AddCommentToPost(request, pk):
     else:
         form = CommentForm()
     return render(request, 'posts/post_detail.html', {'form': form})
+
+class TagListView(LoginRequiredMixin, ListView):
+	model = Tag
+	template_name = 'posts/base.html'
+	context_object_name = 'tags'

@@ -1,0 +1,12 @@
+{% extends "posts/base.html" %}
+{% block content %}
+
+<div class="pt-4">
+
+{% for tag in tags %}
+	<p>[{{tag}}]</p>
+{% endfor %}
+
+</div>
+
+{% endblock content %}

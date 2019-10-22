@@ -1,0 +1,13 @@
+{% extends "posts/base.html" %}
+{% block content %}
+
+<div class="pt-4">
+
+{% for rule in rules %}
+	<h5>[{{rule.rule}}]</h5>
+	<p>{{ rule.content }}</p>
+{% endfor %}
+
+</div>
+
+{% endblock content %}

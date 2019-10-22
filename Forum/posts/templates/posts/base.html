@@ -1,72 +1,129 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'posts/main.css' %}">
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-	<title></title>
+<link rel="stylesheet" type="text/css" href="{% static 'posts/main.css' %}">
+
+<!-- Material Lite CSS and JavaScript -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+<!-- Material Components -->
+<link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<style>
+
+.my-card-content {
+	padding: 100px;
+}
+.my-card {
+	height: 60px;
+	width: 1100px;
+}
+
+</style>
+
+<title></title>
 
 </head>
+
 <body>
 
-	<div class="container">
-		<!-- Search Bar, logo, user profile, and settings -->
-
-		<div class="row">
-			<div class="col-12 inline">
-				<nav class="navbar navbar-light bg-light">
-
-					<div class="col-2">
-						<a class="navbar-brand" href="#">[New Forum]</a>
-					</div>
-
-					<div class="col-7">
-						<form class="form-inline ">
-      						<input class="form-control col-6" type="search" placeholder="Search" aria-label="Search">
-      						<button class="btn btn" type="submit">Search</button>
-    					</form>
-    				</div>
-    				<div class="col-3">
-      					<a class="btn btn-dark btn-sm" href="#" role="button">UserProfile</a>
-						<a class="btn btn-dark btn-sm" href="#" role="button">Settings</a>
-						<a class="btn btn-dark btn-sm"href="{% url 'logout' %}">Logout</a>
-					</div>
-				</nav>
-			</div>
+	<header class=" mdc-top-app-bar">
+		<div class="mdc-top-app-bar__row">
+			<section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+				<span class="mdc-top-app-bar__title">[New Forum]</span> 
+			</section>
+			{% if user.is_authenticated %}
+				<section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
+			      <a class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" href="#" role="button"><i class="material-icons">person</i></a>
+			      <a class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" href="{% url 'posts-home' %}" role="button"><i class="material-icons">home</i></a>
+			      <a class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" href="#" role="button"><i class="material-icons">settings_applications</i></a>
+			      <a class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" href="{% url 'logout' %}" role="button"><i class="material-icons">directions_run</i></a>
+			    </section>
+		    {% else %}
+		    	<section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
+			      <a class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" href="{% url 'login'%}" role="button"><i class="material-icons">person</i></a>
+			    </section>
+		    {% endif %}
 		</div>
+	</header>
+	<div class="mdc-top-app-bar--fixed-adjust"></div>
+
+	<div class="mdc-layout-grid">
+		<div class="mdc-layout-grid__inner">
+				<div class="mdc-layout-grid__cell--span-2">
+
+					{% if user.is_authenticated %}
+
+					<a class="mdc-fab mdc-fab--extended" href="{% url 'posts-create' %}">+ Create Post</a>
 
 
-	<div class="row">
-		<div class="col-2">
-				<a class= "btn btn-primary btn-dark btn-lg btn-block mt-4" href="{% url 'posts-create' %}">Compose</a>
-				<div class="post-nav">
-					<div class="btn-group-vertical btn-block mt-4">
-						<a class="btn btn-dark mt-2" href="{% url 'posts-home' %}">Home</a>
-						<a class="btn btn-dark mt-2" href="#">Tags</a>
-      					<a class="btn btn-dark mt-2" href="#">FAQ</a>
-      					<a class="btn btn-dark mt-2" href="#">Rules</a>
-      					<a class="btn btn-dark mt-2" href="#">Hours</a>
-      				</div>
-      			</div>
-		</div>
+						<aside class="mdc-drawer">
+						  <div class="mdc-drawer__content">
+						    <nav class="mdc-list">
+	      					  <h5 class="mdc-list-group__subheader">Explore tags</h5>
 
-			<div class="col-10">
-				{% block content %}{% endblock %}
+						      {% for tag in tags %}
+						        <a class="mdc-list-item" href="#">
+						          <span class="mdc-list-item__text">[{{tag}}]</span>
+						        </a>
+							  {% endfor %}
+
+						      <hr class="mdc-list-divider">
+	      					  <h5 class="mdc-list-group__subheader">Information</h5>
+	      					  <a class="mdc-list-item" href="{% url 'info-FAQ' %}">
+						        <i class="material-icons mdc-list-item__graphic" aria-hidden="true">drafts</i>
+						        <span class="mdc-list-item__text">FAQ</span>
+						      </a>
+						      <a class="mdc-list-item" href="{% url 'info-rules' %}">
+						        <i class="material-icons mdc-list-item__graphic" aria-hidden="true">drafts</i>
+						        <span class="mdc-list-item__text">Rules</span>
+						      </a>
+						      <a class="mdc-list-item" href="#">
+						        <i class="material-icons mdc-list-item__graphic" aria-hidden="true">drafts</i>
+						        <span class="mdc-list-item__text">Hours Of Operation</span>
+						      </a>
+
+						    </nav>
+						  </div>
+						</aside>
+
+					{% endif %}
+
+				</div>
+
+				{% if user.is_authenticated %}
+
+					<div class="mdc-layout-grid__cell--span-10">
+
+				{% else %}
+
+					<div class="mdc-layout-grid__cell--span-5">
+
+				{% endif %}
+
+						{% block content %}{% endblock %}
+
+					</div>
 			</div>
 		</div>
 	</div>
-
-	<!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </body>
+</body>
 </html>
