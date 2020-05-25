@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<div class="row">
+<div class="row ml-4">
 
 	<div class="banner pt-5">
 		<p class="p-auto bg-primary-white text-dark">Create Post</p>
@@ -10,12 +10,14 @@
 
 </div>
 
-<form method="POST">
-	{% csrf_token %}
+<div class="row ml-4">
+	<form method="POST">
+		{% csrf_token %}
 
-  	{{ form|crispy }}
+  		{{ form|crispy }}
 
-  	<button type="submit" class="btn btn-default">Post</button>
-</form>
+  		<button type="submit" class="btn btn-default">Post</button>
+	</form>
+</div>
 
 {% endblock content %}

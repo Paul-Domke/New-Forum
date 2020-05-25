@@ -1,117 +1,116 @@
 {% extends "posts/base.html" %}
 {% block content %}
 
-<div class="mdc-tab-bar" role="tablist">
-  <div class="mdc-tab-scroller">
-    <div class="mdc-tab-scroller__scroll-area">
-      <div class="mdc-tab-scroller__scroll-content">
-        <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0" id="mdc-tab-1">
-          <span class="mdc-tab__content">
-            <span class="mdc-tab__icon material-icons" aria-hidden="true">favorite</span>
-            <span class="mdc-tab__text-label">Favorites</span>
-          </span>
-          <span class="mdc-tab-indicator mdc-tab-indicator--active">
-            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-          </span>
-          <span class="mdc-tab__ripple"></span>
-        </button>
-        <button class="mdc-tab" role="tab" aria-selected="false" tabindex="-1" id="mdc-tab-2">
-          <span class="mdc-tab__content">
-            <span class="mdc-tab__icon material-icons" aria-hidden="true">favorite</span>
-            <span class="mdc-tab__text-label">Favorites</span>
-          </span>
-          <span class="mdc-tab-indicator">
-            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-          </span>
-          <span class="mdc-tab__ripple"></span>
-        </button>
-        <button class="mdc-tab" role="tab" aria-selected="false" tabindex="-1" id="mdc-tab-3">
-          <span class="mdc-tab__content">
-            <span class="mdc-tab__icon material-icons" aria-hidden="true">favorite</span>
-            <span class="mdc-tab__text-label">Favorites</span>
-          </span>
-          <span class="mdc-tab-indicator">
-            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-          </span>
-          <span class="mdc-tab__ripple"></span>
-        </button>
-      </div>
-    </div>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="recent-tab" data-toggle="tab" href="#recent" role="tab" aria-controls="recent" aria-selected="true">Recent</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="subscribed-tab" data-toggle="tab" href="#subscribed" role="tab" aria-controls="subscribed" aria-selected="false">Subscribed</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="trending-tab" data-toggle="tab" href="#trending" role="tab" aria-controls="trending" aria-selected="false">Trending</a>
+  </li>
+</ul>
+
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="recent" role="tabpanel" aria-labelledby="recent-tab">
+  	{% for post in posts %}
+		<div class="card bg-light">
+			<div class="card-body p-2">
+				<div class="row">
+					<div class="col-1" align="center">
+						<a href="{% url 'upvote' post.id %}"><i class="material-icons">arrow_upward</i><a/>
+						<p>{{ post.upvotes.count }}</p>
+					</div>
+
+					<div class="col-9">
+						{% if post.locked %}
+							<h5 class = "card-title">
+						{% else %}
+							<h5 class="card-title"><a href="{% url 'posts-detail' post.pk %}">
+						{% endif %}
+							{% if post.locked %}
+								Locked
+							{% else %}
+								{% for tag in post.tags.all %}
+									[{{ tag }}]
+							{% endfor %}
+								{{ post.subject }}
+
+							{% endif %}
+						</a></h5>
+
+						<h6 class="card-subtitle">{{ post.author }}</h6>
+					</div>
+					<div class="col-2">
+						<p class="text-center">{{ post.date_posted }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+  </div>
+
+  <div class="tab-pane fade" id="subscribed" role="tabpanel" aria-labelledby="subscribed-tab">
+	 {% for sub in subs %}
+		<div class="card bg-light">
+			<div class="card-body p-2">
+				<div class="row">
+
+					<div class="col-1" align="center">
+						<a href="{% url 'upvote' sub.id %}"><i class="material-icons">arrow_upward</i><a/>
+						<p>{{ sub.upvotes.count }}</p>
+					</div>
+
+					<div class="col-9">
+						<h5 class="card-title"><a href="{% url 'posts-detail' sub.pk %}">
+							{% for tag in sub.tags.all %}
+								[{{ tag }}]
+							{% endfor %}
+							{{ sub.subject }}
+						</a></h5>
+
+						<h6 class="card-subtitle">{{ sub.author }}</h6>
+					</div>
+					<div class="col-2">
+						<p class="text-center">{{ sub.date_posted }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+  </div>
+
+  <div class="tab-pane fade" id="trending" role="tabpanel" aria-labelledby="trending-tab">
+  	{% for trend in trends %}
+		<div class="card bg-light">
+			<div class="card-body p-2">
+				<div class="row">
+
+					<div class="col-1" align="center">
+						<a href="{% url 'upvote' trend.id %}"><i class="material-icons">arrow_upward</i><a/>
+						<p>{{ trend.upvotes.count }}</p>
+					</div>
+
+					<div class="col-9">
+						<h5 class="card-title"><a href="{% url 'posts-detail' trend.pk %}">
+							{% for tag in trend.tags.all %}
+								[{{ tag }}]
+							{% endfor %}
+							{{ trend.subject }}
+						</a></h5>
+
+						<h6 class="card-subtitle">{{ trend.author }}</h6>
+					</div>
+					<div class="col-2">
+						<p class="text-center">{{ trend.date_posted }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
   </div>
 </div>
 
-				{% for post in posts %}
-					<div class="card bg-light">
-						<div class="card-body p-2">
-							<div class="row">
-
-								<div class="col-1">
-									<p class="m-1 text-center">Up</p>
-									<p class="text-center">Down</p>
-								</div>
-
-								<div class="col-9">
-									<h5 class="card-title"><a href="{% url 'posts-detail' post.id %}">
-										{% for tag in post.tags.all %}
-											[{{ tag }}]
-										{% endfor %}
-										{{ post.subject }}
-									</a></h5>
-
-									<h6 class="card-subtitle">{{ post.author }}</h6>
-								</div>
-								<div class="col-2">
-									<p class="text-center">{{ post.date_posted }}</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				{% endfor %}
-
-<!--	
-		Code for subscribed
-
-		{% for post in posts %}
-			{% for tag in post.tags.all %}
-				{% for profile in subs.all %}
-					{% if user == profile.user %}
-						{% for sub in profile.subs.all %}
-							{% if tag == sub %}
-							<div class="card bg-light">
-								<div class="card-body p-2">
-									<div class="row">
-
-										<div class="col-1">
-											<p class="m-1 text-center">Up</p>
-											<p class="text-center">Down</p>
-										</div>
-
-										<div class="col-9">
-											<h5 class="card-title"><a href="{% url 'posts-detail' post.id %}">
-												{% for tag in post.tags.all %}
-													[{{ tag }}]
-												{% endfor %}
-												{{ post.subject }}
-											</a></h5>
-
-											<h6 class="card-subtitle">{{ post.author }}</h6>
-										</div>
-										<div class="col-2">
-											<p class="text-center">{{ post.date_posted }}</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						{% endif %}
-					{% endfor %}
-				{% endif %}
-			{% endfor %}
-		{% endfor %}
-	{% endfor %}
-
-	</div>
-
-</div>
-
--->
 {% endblock content %}

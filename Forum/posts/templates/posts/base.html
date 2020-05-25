@@ -27,15 +27,9 @@
 <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-<style>
+<link href="{% static '/css/main.css' %}" rel="stylesheet" type="text/css">
 
-.my-card-content {
-	padding: 100px;
-}
-.my-card {
-	height: 60px;
-	width: 1100px;
-}
+<style>
 
 </style>
 
@@ -44,18 +38,23 @@
 </head>
 
 <body>
-
-	<header class=" mdc-top-app-bar">
+	<header class="mdc-top-app-bar mdc-top-app-bar--prominent mdc-top-app-bar--dense">
 		<div class="mdc-top-app-bar__row">
 			<section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-				<span class="mdc-top-app-bar__title">[New Forum]</span> 
+				<span class="mdc-top-app-bar__title"><a class="logo" href="{% url 'posts-home' %}">[New Forum]</a></span> 
 			</section>
 			{% if user.is_authenticated %}
+
+			<form class="form-inline" action="{% url 'posts-search' %}">
+		      <input class="form-control mr-2" type="get" name="q" value="{{request.GET.q}}" placeholder="Search" aria-label="Search">
+		      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		    </form>
+
 				<section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
-			      <a class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" href="#" role="button"><i class="material-icons">person</i></a>
+			      <a class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" href="{% url 'users-profile' %}" role="button"><i class="material-icons">person</i></a>
 			      <a class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" href="{% url 'posts-home' %}" role="button"><i class="material-icons">home</i></a>
-			      <a class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" href="#" role="button"><i class="material-icons">settings_applications</i></a>
-			      <a class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" href="{% url 'logout' %}" role="button"><i class="material-icons">directions_run</i></a>
+			      <a class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" href="{% url 'posts-settings' %}" role="button"><i class="material-icons">settings_applications</i></a>
+			      <a class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" href="{% url 'logout' %}" role="button"><i class="material-icons">exit_to_app</i></a>
 			    </section>
 		    {% else %}
 		    	<section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
@@ -64,7 +63,7 @@
 		    {% endif %}
 		</div>
 	</header>
-	<div class="mdc-top-app-bar--fixed-adjust"></div>
+	<div class="mdc-top-app-bar--dense-prominent-fixed-adjust"></div>
 
 	<div class="mdc-layout-grid">
 		<div class="mdc-layout-grid__inner">
@@ -72,19 +71,21 @@
 
 					{% if user.is_authenticated %}
 
-					<a class="mdc-fab mdc-fab--extended" href="{% url 'posts-create' %}">+ Create Post</a>
-
-
 						<aside class="mdc-drawer">
 						  <div class="mdc-drawer__content">
 						    <nav class="mdc-list">
+						      <a class="mdc-fab mdc-fab--extended" href="{% url 'posts-create' %}">+ Create Post</a>
 	      					  <h5 class="mdc-list-group__subheader">Explore tags</h5>
 
 						      {% for tag in tags %}
-						        <a class="mdc-list-item" href="#">
+						        <a class="mdc-list-item" href="{% url 'posts-view-tags' tag.title %}">
 						          <span class="mdc-list-item__text">[{{tag}}]</span>
 						        </a>
 							  {% endfor %}
+
+							  <a class="mdc-list-item" href="{% url 'tag-subscribe' %}">
+						          <span class="mdc-list-item__text">[Subscribe to Tags]</span>
+						        </a>
 
 						      <hr class="mdc-list-divider">
 	      					  <h5 class="mdc-list-group__subheader">Information</h5>
@@ -96,7 +97,7 @@
 						        <i class="material-icons mdc-list-item__graphic" aria-hidden="true">drafts</i>
 						        <span class="mdc-list-item__text">Rules</span>
 						      </a>
-						      <a class="mdc-list-item" href="#">
+						      <a class="mdc-list-item" href="{% url 'info-hours' %}">
 						        <i class="material-icons mdc-list-item__graphic" aria-hidden="true">drafts</i>
 						        <span class="mdc-list-item__text">Hours Of Operation</span>
 						      </a>

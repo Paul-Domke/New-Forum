@@ -5,10 +5,11 @@ from .views import (
 	FAQListView,
 	RulesListView,
 	FAQCreateView,
-	RuleCreateView
+	RuleCreateView,
 	)
 
 urlpatterns = [
-    path('info/rules', RulesListView.as_view(), name='info-rules'),
+    path('info/rules', views.rules, name='info-rules'),
     path('info/FAQ', FAQListView.as_view(), name='info-FAQ'),
+    path('info/hoursOfOperation',views.hoursOfOperation, name='info-hours'),
 ]

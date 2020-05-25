@@ -2,18 +2,26 @@ from django.urls import path
 from . import views
 from users import views as user_views
 from .views import (
-	PostListView, 
-	PostDetailView, 
+	#PostDetailView, 
 	PostCreateView, 
 	PostUpdateView,
-	TagListView
+	PostUpvote,
 	)
 
 urlpatterns = [
-    path('', PostListView.as_view(), name='posts-home'),
-    path('posts/<int:pk>/', PostDetailView.as_view(), name='posts-detail'),
+    path('', views.home, name='posts-home'),
+
+    path('posts/<int:pk>/', views.PostDetailView, name='posts-detail'),
     path('posts/create/', PostCreateView.as_view(), name='posts-create'),
+
     path('posts/<int:pk>/update/', PostUpdateView.as_view(), name='posts-update'),
     path('posts/<int:pk>/comment/', views.AddCommentToPost, name='posts-add-comment'),
-    path('posts/tags', TagListView.as_view(), name='posts-view-tags')
+
+    path('posts/tags/<slug:tag>/', views.tagFilter, name='posts-view-tags'),
+
+    path('settings/', views.settings, name='posts-settings'),
+    path('vote/<int:pk>',PostUpvote.as_view() , name="upvote"),
+
+    path('posts/search', views.search, name='posts-search'),
+    path('posts/subscribetag', views.TagSubscribe, name='tag-subscribe')
 ]

@@ -2,14 +2,16 @@ from django.db import models
 
 # Create your models here.
 
-#class HoursInDay():
-	#day
-	#hours, list of times open on that day
 
-#class HoursOfOp(models.Model):
-	#service
-	#hours = HoursInDay
-	#updated, when this updated it will send a post to the forum telling people that the hours have changed
+class HoursOpen(models.Model):
+
+	weekday = models.CharField(max_length=10)
+	hour_start = models.TimeField()
+	hours_end = models.TimeField()
+
+class HoursOfOp(models.Model):
+	service = models.CharField(max_length=50)
+	hours = models.ManyToManyField('info.HoursOpen', related_name="hours")
 
 class FAQ(models.Model):
 	question = models.CharField(max_length=100)

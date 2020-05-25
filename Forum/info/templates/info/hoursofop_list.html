@@ -1,0 +1,19 @@
+{% extends "posts/base.html" %}
+{% block content %}
+
+<div class="ml-4">
+{% for hours in service %}
+
+<div class = "mdl-card mdl-shadow--4dp mt-4">
+	<div class = "mdl-card__title">{{hours.service}}</div>
+	{% for hour in hours.hours.all %}
+		<div class = "mdl-card__supporting-text">{{hour.weekday}}
+		{{hour.hour_start}} - {{hour.hours_end}}</div>
+	{% endfor %}
+</div>
+{% endfor %}
+</div>
+
+
+
+{% endblock content %}

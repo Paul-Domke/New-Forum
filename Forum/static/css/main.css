@@ -1,0 +1,52 @@
+:root{
+	--mdc-theme-primary: #c49000;
+    --mdc-theme-secondary: #1e88e5;
+    --mdc-theme-background: black;
+    --mdc-theme-surface: #fff;
+    --mdc-theme-error: orange;
+    --mdc-theme-on-primary: red;
+    --mdc-theme-on-secondary: #fff;
+    --mdc-theme-on-surface: yellow;
+    --mdc-theme-on-error: #fff;
+
+    --mdc-theme-text-primary-on-background: rgba(0, 0, 0, 0.87);
+    --mdc-theme-text-secondary-on-background: rgba(0, 0, 0, 0.54);
+    --mdc-theme-text-hint-on-background: rgba(0, 0, 0, 0.38);
+    --mdc-theme-text-disabled-on-background: yellow;
+    --mdc-theme-text-icon-on-background: rgba(0, 0, 0, 0.38);
+    --mdc-theme-text-primary-on-light: rgba(0, 0, 0, 0.87);
+    --mdc-theme-text-secondary-on-light: rgba(0, 0, 0, 0.54);
+    --mdc-theme-text-hint-on-light: rgba(0, 0, 0, 0.38);
+    --mdc-theme-text-disabled-on-light: rgba(0, 0, 0, 0.38);
+    --mdc-theme-text-icon-on-light: rgba(0, 0, 0, 0.38);
+    --mdc-theme-text-primary-on-dark: white;
+    --mdc-theme-text-secondary-on-dark: rgba(255, 255, 255, 0.7);
+    --mdc-theme-text-hint-on-dark: rgba(255, 255, 255, 0.5);
+    --mdc-theme-text-disabled-on-dark: rgba(255, 255, 255, 0.5);
+    --mdc-theme-text-icon-on-dark: rgba(255, 255, 255, 0.5);
+}
+
+.form-control{
+	width: 400px;
+}
+
+.logo{
+	color: white;
+}
+
+a{
+	color: black;
+}
+
+media (min-width: 576px)
+.form-inline .form-control {{
+	width: 300px;
+}
+
+.mdc-top-app-bar__section{
+	flex: ;
+}
+
+.mdc-drawer{
+	width: inherit;
+}
